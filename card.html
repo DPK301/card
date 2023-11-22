@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARDS API FETCHING</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  
+  
+   <h1 style="margin-left: 10px;"><i class="fa-solid fa-user"></i> USER DETAILS <i class="fa-solid fa-right-long"></i></h1>
+  <div  style="display: flex;" id="data">
+
+  </div>
+ 
+         
+</body>
+<script>
+    const request = new XMLHttpRequest();
+    request.open('get','https://jsonplaceholder.typicode.com/users');
+    request.send();
+     request.onreadystatechange=()=>
+       {
+        if(request.readyState==4)
+        {
+               if(request.status>199 && request.status<300){
+                console.log(request.responseText);
+                let details = JSON.parse(request.responseText);
+                console.log(details);
+                display(details);
+               
+               }else
+               {
+                alert("Failed to connect to jsonplaceholder")
+               }
+        }
+       }
+
+       function display(details){
+           
+        for(let a of details){
+          data.innerHTML+=`<div>
+            <div class="card m-3 shadow" style="width: 18rem; height:510px">
+  <div class="card-body">
+    <h5 class="card-title"><i class="fa-regular fa-user"></i> ${a.name}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">username:${a.username}</h6>
+   
+   <div >
+    <hr>
+    id : ${a.id}<br>
+    <i class="fa-solid fa-envelope"></i> : ${a.email}<br>
+   <div style=" display:flex" > <i class="fa-solid fa-location-dot ms-1 mt-1 me-1"></i> :<div class="ms-1">
+    ${a.address.city},${a.address.street},${a.address.suite},${a.address.zipcode}<br>
+    Lat : ${a.address.geo.lat}<br>
+    Lng : ${a.address.geo.lng}</div> </div>
+    <i class="fa-solid fa-phone"></i> : ${a.phone}<br>
+    <i class="fa-solid fa-globe"></i> : ${a.website}<br><hr>
+    <h6 class="card-subtitle mb-2 text-body-secondary mt-1"><b>company Details</b></h6><hr>
+   <div class="opacity-75"> <b>name</b> : ${a.company.name}<br>
+    <b>CatchPhrase</b> : ${a.company.catchPhrase}<br>
+    <b>bs</b> :  ${a.company.bs}</div>
+    </div>
+  
+  </div>
+  </div>
+  </div>`
+ 
+        }
+
+           
+       }
+</script>
+</html>
